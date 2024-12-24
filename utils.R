@@ -5,6 +5,8 @@ library(purrr)
 library(stringr)
 library(corrr)
 library(ggplot2)
+library(parallel)
+library(doParallel)
 
 convert_counts_to_boolean <- function(tibble, col_indexes) {
   tibble %>%
@@ -13,30 +15,6 @@ convert_counts_to_boolean <- function(tibble, col_indexes) {
       . == 0 ~ 0,
       TRUE ~ NA_real_
     )))
-}
-
-add_cols_for_means <- function(tibble) {
-  tibble %>%
-    mutate(mean_HD_Vehicles = rowMeans(select(
-      tibble,
-      starts_with("HD_Vehicles_")
-    ), na.rm = TRUE)) %>%
-    mutate(mean_HD_Livestocksightings = rowMeans(select(
-      tibble,
-      starts_with("livestock_")
-    ), na.rm = TRUE)) %>%
-    mutate(mean_HD_People = rowMeans(select(
-      tibble,
-      starts_with("HD_People_")
-    ), na.rm = TRUE)) %>%
-    mutate(mean_HD_Trash = rowMeans(select(
-      tibble,
-      starts_with("HD_Trash_")
-    ), na.rm = TRUE)) %>%
-    mutate(mean_rain_score = rowMeans(select(
-      tibble,
-      starts_with("Rain_score_")
-    ), na.rm = TRUE))
 }
 
 summarize_columns <- function(datasheet) {
@@ -71,7 +49,6 @@ preprocess_ultimate_sheet <- function(ultimate_sheet_path) {
 
   master_sheet <- master_sheet %>%
     convert_counts_to_boolean(23:152) %>%
-    add_cols_for_means() %>%
     summarize_columns() %>%
     reorder_columns()
 }
@@ -100,8 +77,7 @@ save_correlations <- function(master_sheet, filenames) {
     "mean_HD_Vehicles",
     "mean_HD_Livestocksightings",
     "mean_HD_People",
-    "mean_HD_Trash",
-    "mean_rain_score"
+    "mean_HD_Trash"
   ))
 
   plot2 <- correlation_set2 %>%
@@ -154,11 +130,12 @@ create_prediction_data <- function(
 create_predictive_plots <- function(
   sample_data,
   model,
-  titles,
+  plot_title,
+  subplot_titles,
   x_labels
 ) {
   if ((ncol(sample_data) != length(x_labels)) ||
-      length(titles) != length(x_labels)
+      length(subplot_titles) != length(x_labels)
   ) {
     print(
       "Number of labels does not equal number of variables.
@@ -196,15 +173,26 @@ Stopping predictions."
       alpha = 0.3
     ) +
     labs(
-      title = "Elephant occupancy",
+      title = plot_title,
       y = "Occupancy probability"
     ) +
     facet_wrap(
       ~ Labels,
       ncol = 2,
       scales = "free_x",
-      labeller = labeller(Labels = setNames(titles, x_labels))
+      labeller = labeller(Labels = setNames(subplot_titles, x_labels))
     ) +
     theme_classic() +
     theme(plot.title = element_text(hjust = 0.5))
+}
+
+setup_parallel <- function() {
+  num_cores <- detectCores() - 1
+  cluster <- makeCluster(num_cores)
+  registerDoParallel(cluster)
+  return(cluster)
+}
+
+cleanup_parallel <- function(cluster) {
+  stopCluster(cluster)
 }
