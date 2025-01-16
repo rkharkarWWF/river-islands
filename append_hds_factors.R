@@ -39,7 +39,8 @@ merged_table <- left_join(
   y = hum_dist_determinants,
   by = "Grid_ID",
   keep = FALSE
-)
+) %>%
+  utils$reorder_columns()
 
 write_parquet(
   x = merged_table,

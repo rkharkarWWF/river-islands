@@ -24,10 +24,6 @@ elephants_models <- list(
     p ~ Rain_score + HD_Vehicles + substrate_score
   ),
   c(
-    psi ~ cattle,
-    p ~ Rain_score + HD_Vehicles + substrate_score
-  ),
-  c(
     psi ~ Human_disturbance_score + Dist_to_PA_km,
     p ~ Rain_score + HD_Vehicles + substrate_score
   ),

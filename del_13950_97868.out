@@ -1,0 +1,324 @@
+
+
+PRESENCE - Presence/Absence-Site Occupancy data analysis
+Wed Jan 15 16:30:37 2025,       Version 2.15.11.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+==>realbetavc
+==>maxfn=32000
+==>name=psi(1)p(1)theta(PRIME)
+==>quiet
+==>nrand=100
+==>seed=100
+seed=100
+varcov: nsig=6 eps=1.000000e-02
+
+
+
+
+********* Input Data summary *******
+Number of histories read       = 321
+Number of sites                = 321
+Number of sampling occasions   = 10
+Number of sampling methods   = 1
+Number of states               = 10
+Number of missing observations = 1086
+Data checksum = 24853
+
+NSiteCovs-->0
+NSampCovs-->0
+Primary periods=1 Secondary periods: 10
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ PRESENCE Analysis
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+N=321 T=10 Groups=1 bootstraps=0
+
+Matrix 1: rows=22, cols=4
+            -,a1,a2,a3
+psi            1  0  0
+th0(1)         0  1  0
+th0(2)         0  1  0
+th0(3)         0  1  0
+th0(4)         0  1  0
+th0(5)         0  1  0
+th0(6)         0  1  0
+th0(7)         0  1  0
+th0(8)         0  1  0
+th0(9)         0  1  0
+th0(10)        0  1  0
+th1(1)         0  1  1
+th1(2)         0  1  1
+th1(3)         0  1  1
+th1(4)         0  1  1
+th1(5)         0  1  1
+th1(6)         0  1  1
+th1(7)         0  1  1
+th1(8)         0  1  1
+th1(9)         0  1  1
+th1(10)        0  1  1
+
+Matrix 2: rows=0, cols=0
+
+Matrix 3: rows=0, cols=0
+
+Matrix 4: rows=11, cols=2
+            -,d1
+p1             1
+p2             1
+p3             1
+p4             1
+p5             1
+p6             1
+p7             1
+p8             1
+p9             1
+p10            1
+
+Matrix 5: rows=2, cols=2
+            -,e1
+th0pi          1
+
+Matrix 6: rows=0, cols=0
+
+Naive occupancy estimates: 0.392523
+
+modtype=10
+
+Single-season-Correlated-Detections model - 
+=============================================
+
+1 Primary periods
+  Secondary periods: 10
+
+Model(1):psi(1)p(1)theta(PRIME)
+
+
+
+Open Population Model:
+
+attempt 0/100 (iv= 0.0000  0.0000  0.0000...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 1/100 (iv=-4.9775  0.0324 -3.6474...), -2loglike=1441.2591,  optmiz time:0.0 min.
+attempt 2/100 (iv=-0.0242  3.0084 -2.0938...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 3/100 (iv=-2.7703  4.5667 -3.0812...), -2loglike=1441.2591,  optmiz time:0.0 min.
+attempt 4/100 (iv= 1.2117  1.6114  2.1023...), -2loglike=1407.3550,  optmiz time:0.0 min.
+attempt 5/100 (iv=-3.4657 -3.4669 -0.2871...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 6/100 (iv= 1.2436 -0.3554  3.4567...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 7/100 (iv= 4.1414 -0.7272 -2.5927...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 8/100 (iv= 4.5493 -0.0726 -2.6180...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 9/100 (iv=-1.3920 -4.6332 -1.0328...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 10/100 (iv= 4.3117 -0.8686  3.8434...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 11/100 (iv= 2.0579 -1.0776  3.5216...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 12/100 (iv= 3.7973 -0.4761 -3.2226...), -2loglike=1399.9786,  optmiz time:0.0 min.
+attempt 13/100 (iv= 4.0159 -0.8873 -1.5885...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 14/100 (iv=-4.1366  0.3987  3.5463...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 15/100 (iv=-2.7491 -2.3474 -0.9546...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 16/100 (iv= 3.9392 -1.9546  1.6516...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 17/100 (iv= 1.3683  0.9302  3.0834...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 18/100 (iv= 3.8515  3.8625 -4.3640...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 19/100 (iv=-0.4551  0.4970  2.2553...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 20/100 (iv= 0.0091 -0.4306 -4.8627...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 21/100 (iv=-3.6465 -1.3478  0.8460...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 22/100 (iv=-1.5198 -1.9041 -2.4036...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 23/100 (iv=-4.5905  2.5541  0.3368...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 24/100 (iv=-1.3661 -0.6189 -2.9379...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 25/100 (iv=-3.7086  0.5937 -3.5507...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 26/100 (iv=-3.5561 -4.9838 -1.5219...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 27/100 (iv=-2.7869  3.5636 -1.2090...), -2loglike=1441.2591,  optmiz time:0.0 min.
+attempt 28/100 (iv= 1.0175 -3.0809  1.3486...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 29/100 (iv=-3.3924  4.8034 -2.7408...), -2loglike=1441.2591,  optmiz time:0.0 min.
+attempt 30/100 (iv= 3.7724 -3.5930  0.2081...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 31/100 (iv= 2.2772  2.8584 -1.8607...), -2loglike=1441.2591,  optmiz time:0.0 min.
+attempt 32/100 (iv=-0.7962  4.4682  4.6497...), -2loglike=1442.4465,  optmiz time:0.0 min.
+attempt 33/100 (iv= 3.6294 -3.3715  4.1394...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 34/100 (iv= 1.5442  1.3695 -3.0204...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 35/100 (iv= 2.8543  0.9882  1.5293...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 36/100 (iv= 0.1392 -1.3572 -2.2937...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 37/100 (iv=-0.5821  3.1818  0.3145...), -2loglike=1441.2591,  optmiz time:0.0 min.
+attempt 38/100 (iv= 4.1608 -1.7317  1.4411...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 39/100 (iv= 4.0466  1.5038 -0.4090...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 40/100 (iv= 3.5124 -3.1666 -2.7035...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 41/100 (iv=-4.2758  0.7283  3.5816...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 42/100 (iv=-3.8350  2.3510  3.7775...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 43/100 (iv= 1.5528  3.1466  0.8710...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 44/100 (iv= 2.0317  0.6570  4.8539...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 45/100 (iv=-1.4977  3.3891 -3.1466...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 46/100 (iv= 2.4153 -0.6072 -1.8032...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 47/100 (iv=-1.1558 -1.8804 -0.0713...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 48/100 (iv=-0.9435 -2.8913  4.1171...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 49/100 (iv= 0.6164 -4.7995  3.2759...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 50/100 (iv= 1.4536 -3.4685  2.9645...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 51/100 (iv= 2.9743  4.7846 -4.8475...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 52/100 (iv= 3.1321 -0.4945 -1.8381...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 53/100 (iv= 4.5206  3.1979 -2.7004...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 54/100 (iv= 2.6899  3.0445 -0.6845...), -2loglike=1441.2591,  optmiz time:0.0 min.
+attempt 55/100 (iv= 3.2953 -0.8118  3.0701...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 56/100 (iv= 0.6510 -3.4856 -3.9657...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 57/100 (iv=-4.4062 -3.0770  1.5958...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 58/100 (iv= 2.3210 -2.1841  3.5915...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 59/100 (iv= 1.9170 -4.5451 -4.8626...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 60/100 (iv= 4.9328 -0.2010 -1.8214...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 61/100 (iv= 4.7884 -0.6191 -2.5654...), -2loglike=1399.9786,  optmiz time:0.0 min.
+attempt 62/100 (iv= 1.1847  4.5675 -2.8459...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 63/100 (iv= 2.2387  4.4060  3.6778...), -2loglike=1442.4465,  optmiz time:0.0 min.
+attempt 64/100 (iv=-3.8535 -1.0991 -4.9568...), -2loglike=1441.2591,  optmiz time:0.0 min.
+attempt 65/100 (iv=-2.8381  1.0345 -4.8015...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 66/100 (iv=-3.9883  0.4635  4.7644...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 67/100 (iv=-2.7467  3.7941  4.0572...), -2loglike=1442.4465,  optmiz time:0.0 min.
+attempt 68/100 (iv= 3.9181  1.7811 -4.8273...), -2loglike=1442.4465,  optmiz time:0.0 min.
+attempt 69/100 (iv=-4.3072 -0.6407  1.1197...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 70/100 (iv=-3.8471  4.5329 -0.4465...), -2loglike=1441.2591,  optmiz time:0.0 min.
+attempt 71/100 (iv=-4.8044 -2.9838 -2.7075...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 72/100 (iv=-3.3408 -4.0296 -3.6427...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 73/100 (iv= 1.9494  0.2169 -0.5726...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 74/100 (iv= 4.5445 -4.5590  1.6274...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 75/100 (iv= 3.3617  4.8154 -4.8371...), -2loglike=1441.2591,  optmiz time:0.0 min.
+attempt 76/100 (iv= 0.6380 -3.7035 -4.0482...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 77/100 (iv=-0.6831 -2.9548 -1.2253...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 78/100 (iv=-0.9693 -0.9205 -2.3875...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 79/100 (iv=-2.6677 -3.6490 -1.6364...), -2loglike=1399.9786,  optmiz time:0.0 min.
+attempt 80/100 (iv= 2.0938  0.7384  1.3207...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 81/100 (iv= 0.7211 -0.8568  2.7465...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 82/100 (iv= 0.1014  3.2335  2.6458...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 83/100 (iv= 4.1191  2.3756  0.9987...), -2loglike=1441.2591,  optmiz time:0.0 min.
+attempt 84/100 (iv= 2.0957  1.9693  1.6717...), -2loglike=1441.2591,  optmiz time:0.0 min.
+attempt 85/100 (iv= 2.7011 -3.6290 -4.5884...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 86/100 (iv=-0.9005  3.0708  2.7256...), -2loglike=1442.4465,  optmiz time:0.0 min.
+attempt 87/100 (iv= 3.8228  0.6782 -3.1285...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 88/100 (iv= 1.4976  0.1617 -3.5134...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 89/100 (iv= 3.6923 -1.1065 -0.7834...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 90/100 (iv=-0.3185  4.3589 -2.6972...), -2loglike=1441.2591,  optmiz time:0.0 min.
+attempt 91/100 (iv= 1.2358 -4.5173 -4.5833...), -2loglike=1441.2591,  optmiz time:0.0 min.
+attempt 92/100 (iv=-2.4811 -4.4026  3.2597...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 93/100 (iv=-0.4960 -4.1818  1.3594...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 94/100 (iv=-0.0544  3.6578 -2.4620...), -2loglike=1441.2591,  optmiz time:0.0 min.
+attempt 95/100 (iv=-2.7125  3.8009  3.7067...), -2loglike=1442.4465,  optmiz time:0.0 min.
+attempt 96/100 (iv=-0.7733  1.4391 -2.3273...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 97/100 (iv=-4.1774  1.0413  3.2325...), -2loglike=1408.1805,  optmiz time:0.0 min.
+attempt 98/100 (iv= 4.3440 -2.8824 -4.0480...), -2loglike=1442.4465,  optmiz time:0.0 min.
+attempt 99/100 (iv= 1.5848  0.2519  1.3219...), -2loglike=1399.8623,  optmiz time:0.0 min.
+attempt 100/100 (iv=-1.5693 -2.3607 -1.2662...), -2loglike=1399.8623,  optmiz time:0.0 min.
+Best initial-value vector attempt:23
+
+Distribution of -2logLike:
+1399.86    77:**************************************************
+1402.10     0:
+1404.34     0:
+1406.59     2:*
+1408.83     0:
+1411.07     0:
+1413.31     0:
+1415.55     0:
+1417.79     0:
+1420.03     0:
+1422.28     0:
+1424.52     0:
+1426.76     0:
+1429.00     0:
+1431.24     0:
+1433.48     0:
+1435.72     0:
+1437.96     0:
+1440.21    21:*************
+1442.45     1:
+100 random initial value vectors attempted:
+Initial values:
+   -4.5905    2.5541    0.3368   -2.3719   -2.5666
+
+Number of parameters           = 5
+Number of function calls           = 331
+
+**** Numerical convergence may not have been reached.
+     Parameter estimates converged to approximately 
+     5.54 significant digits.
+
+-2log(likelihood)              = 1399.8623
+AIC                            = 1409.8623
+
+Optimization results:
+  optmiz time: 0.0 min
+  threads: 1
+  Completion-code: 130
+  Iterations: 331
+  Significant digits: 5.54
+
+
+Model has been fit using the logistic link.
+
+
+Untransformed Estimates of coefficients for covariates (Beta's)
+======================================================================
+                                          estimate    std.error
+A1   psi                              :   1.494459    2.502025
+A2   th0(1)                           :  -2.517186    0.980637
+A3   th1(1)                           :   3.702283    1.354071
+D1   p1                               :  -0.044244    0.300614
+E1   th0pi                            :  -0.199035    0.839523
+
+Variance-Covariance Matrix of Untransformed estimates (Beta's):
+              A1         A2         A3         D1         E1  
+     A1    6.260131  -2.378019   3.164927  -0.464748  -1.932684
+     A2   -2.378019   0.961648  -1.304377   0.202857   0.703567
+     A3    3.164927  -1.304377   1.833507  -0.313920  -0.923016
+     D1   -0.464748   0.202857  -0.313920   0.090369   0.103802
+     E1   -1.932684   0.703567  -0.923016   0.103802   0.704799
+------------------------------
+
+   Individual Site estimates of <psi>
+                Site               estimate  Std.err   95% conf. interval
+psi             1 1               :  0.8167   0.3745     0.0320 -  0.9983
+
+   Individual Site estimates of <th0(1)>
+                Site               estimate  Std.err   95% conf. interval
+th0(1)          1 1               :  0.0747   0.0678     0.0117 -  0.3555
+th0(2)          1 1               :  0.0747   0.0678     0.0117 -  0.3555
+th0(3)          1 1               :  0.0747   0.0678     0.0117 -  0.3555
+th0(4)          1 1               :  0.0747   0.0678     0.0117 -  0.3555
+th0(5)          1 1               :  0.0747   0.0678     0.0117 -  0.3555
+th0(6)          1 1               :  0.0747   0.0678     0.0117 -  0.3555
+th0(7)          1 1               :  0.0747   0.0678     0.0117 -  0.3555
+th0(8)          1 1               :  0.0747   0.0678     0.0117 -  0.3555
+th0(9)          1 1               :  0.0747   0.0678     0.0117 -  0.3555
+th0(10)         1 1               :  0.0747   0.0678     0.0117 -  0.3555
+
+   Individual Site estimates of <th1(1)>
+                Site               estimate  Std.err   95% conf. interval
+th1(1)          1 1               :  0.7659   0.0774     0.5839 -  0.8840
+th1(2)          1 1               :  0.7659   0.0774     0.5839 -  0.8840
+th1(3)          1 1               :  0.7659   0.0774     0.5839 -  0.8840
+th1(4)          1 1               :  0.7659   0.0774     0.5839 -  0.8840
+th1(5)          1 1               :  0.7659   0.0774     0.5839 -  0.8840
+th1(6)          1 1               :  0.7659   0.0774     0.5839 -  0.8840
+th1(7)          1 1               :  0.7659   0.0774     0.5839 -  0.8840
+th1(8)          1 1               :  0.7659   0.0774     0.5839 -  0.8840
+th1(9)          1 1               :  0.7659   0.0774     0.5839 -  0.8840
+th1(10)         1 1               :  0.7659   0.0774     0.5839 -  0.8840
+
+   Individual Site estimates of <p1>
+                Site               estimate  Std.err   95% conf. interval
+p1              1 1               :  0.4889   0.0751     0.3467 -  0.6330
+p2              1 1               :  0.4889   0.0751     0.3467 -  0.6330
+p3              1 1               :  0.4889   0.0751     0.3467 -  0.6330
+p4              1 1               :  0.4889   0.0751     0.3467 -  0.6330
+p5              1 1               :  0.4889   0.0751     0.3467 -  0.6330
+p6              1 1               :  0.4889   0.0751     0.3467 -  0.6330
+p7              1 1               :  0.4889   0.0751     0.3467 -  0.6330
+p8              1 1               :  0.4889   0.0751     0.3467 -  0.6330
+p9              1 1               :  0.4889   0.0751     0.3467 -  0.6330
+p10             1 1               :  0.4889   0.0751     0.3467 -  0.6330
+
+   Individual Site estimates of <th0pi>
+                Site               estimate  Std.err   95% conf. interval
+th0pi           1 1               :  0.4504   0.2078     0.1365 -  0.8094
+
+
+ DERIVED parameters
+      th0(1) = th0pi*th0 + (1-th0pi)*th1 = Pr(1st segment is used)
+
+        Site                     th0(1)  Std.err     95% conf. interval
+th0(1)          1 1               :  0.3860   0.1556     0.0811 - 0.6909
+
+CPU time= 17 seconds (0.28 min)
+
+
+PRESENCE - Presence/Absence-Site Occupancy data analysis
+Wed Jan 15 16:30:37 2025,       Version 2.15.11.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,3 +1,6 @@
+models <- new.env()
+sys.source("models.R", envir = models)
+
 library(dplyr)
 library(tidyr)
 library(magrittr)
@@ -7,6 +10,9 @@ library(corrr)
 library(ggplot2)
 library(parallel)
 library(doParallel)
+library(arrow)
+library(readr)
+library(foreach)
 
 convert_counts_to_boolean <- function(tibble, col_indexes) {
   tibble %>%
@@ -31,7 +37,7 @@ reorder_columns <- function(datasheet) {
   ordered_columns <- with(datasheet, {
     data.frame(
       col_name = names(datasheet),
-      base_name = str_extract(names(datasheet), "^(.*)_"),
+      base_name = str_extract(names(datasheet), "^(.*)_?"),
       number = as.numeric(str_extract(names(datasheet), "\\d+"))
     ) %>%
       arrange(base_name, number) %>%
@@ -42,7 +48,7 @@ reorder_columns <- function(datasheet) {
 }
 
 preprocess_ultimate_sheet <- function(ultimate_sheet_path) {
-  master_sheet <- readr::read_csv(
+  master_sheet <- arrow::read_parquet(
     file = ultimate_sheet_path,
     show_col_types = FALSE
   )
@@ -113,7 +119,7 @@ create_prediction_data <- function(
     ncol = length(columns)
   )
   for (i in seq_len(nrow(data_matrix))) {
-    column_data <- datasheet[[columns[i]]]
+    column_data <- datasheet[,i]
     data_matrix[[i, i]] <- seq(
       from = trunc(min(column_data, na.rm = TRUE) * 10) / 10,
       to = trunc(max(column_data, na.rm = TRUE) * 10) / 10,
@@ -195,4 +201,125 @@ setup_parallel <- function() {
 
 cleanup_parallel <- function(cluster) {
   stopCluster(cluster)
+}
+
+run_models_return_output <- function(
+  datasheet_path,
+  animal_prefix,
+  models_list,
+  psi_covars_list = NULL,
+  mutation_list = NULL,
+  p_covars_match_string = NULL,
+  aic_table_filepath = NULL,
+  coeffs_table_filepath = NULL,
+  preds_image_filepath = NULL
+) {
+  datasheet <- read_parquet(datasheet_path)
+
+  grids_and_occupancy <- datasheet %>%
+    select("Grid_ID", starts_with(animal_prefix))
+  psi_covars <- NULL
+  if (is.atomic(psi_covars_list)) {
+    psi_covars <- datasheet %>%
+      select(all_of(psi_covars_list)) %>%
+      mutate(across(all_of(mutation_list), scale))
+  }
+  p_covars <- NULL
+  if (is.character(p_covars_match_string)) {
+    p_covars <- datasheet %>%
+      select(matches(p_covars_match_string)) %>%
+      combine_columns_by_prefix()
+  }
+
+  if (!is.list(models_list) || !length(models_list)) {
+    stop("Must provide formulae list to run models")
+  }
+
+  cluster <- setup_parallel()
+
+  hines_models <- foreach(
+    formula = models_list,
+    .packages = c("RPresence", "dplyr"),
+    .export = c("models")
+  ) %dopar% {
+    models$calculate_hines_occupancy(
+      site_and_detection_history = grids_and_occupancy,
+	 model_formula = formula,
+	 unitcov = psi_covars,
+	 survcov = p_covars
+    )
+  }
+  cleanup_parallel(cluster)
+
+  aic <- createAicTable(
+    hines_models,
+    use.aicc = TRUE
+  )
+
+  model_order <- as.numeric(rownames(aic$table))
+  hines_models_reordered <- hines_models[model_order]
+
+  coeffs_table <- hines_models_reordered %>%
+    map(.f = ~coef(.x, param = "psi", prob = 0.05)) %>%
+    bind_rows() %>%
+    tibble::rownames_to_column(var = "model") %>%
+    tibble()
+
+  if (is.character(aic_table_filepath)) {
+    write_csv(
+      aic$table,
+      aic_table_filepath
+    )
+  }
+  if (is.character(coeffs_table_filepath)) {
+    write_csv(
+      coeffs_table,
+      coeffs_table_filepath
+    )
+  }
+
+  pred_plots <- NULL
+  if (is.character(preds_image_filepath)) {
+    prediction_data <- create_prediction_data(
+      psi_covars,
+      colnames(hines_models_reordered[[1]]$data$unitcov),
+      datapoints = 100
+    )
+
+    pred_plots <- create_predictive_plots(
+      sample_data = prediction_data,
+      model = hines_models_reordered[[1]],
+      plot_title = "Predictions scaled values",
+      subplot_titles = colnames(prediction_data),
+      x_labels = colnames(prediction_data)
+    )
+
+    ggsave(
+      filename = preds_image_filepath,
+      plot = pred_plots
+    )
+  }
+
+  return(list(
+    "datasheet" = datasheet,
+    "aic" = aic,
+    "models" = hines_models_reordered,
+    "plot" = pred_plots
+  ))
+}
+
+show_model_plots <- function(model) {
+  prediction_data <- create_prediction_data(
+    model$data$unitcov,
+    colnames(model$data$unitcov),
+    datapoints = 100
+  )
+
+  create_predictive_plots(
+    sample_data = prediction_data,
+    model = model,
+    plot_title = "Predictions scaled values",
+    subplot_titles = colnames(prediction_data),
+    x_labels = colnames(prediction_data)
+  )
 }

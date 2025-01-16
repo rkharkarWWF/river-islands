@@ -37,58 +37,22 @@ naive_occupancies$Occupancy <- sapply(config$animals, function(name) {
 write_csv(naive_occupancies, config$naive_occupancies_file)
 
 #--------------------Reproduce elephants--------------------
-grids_and_elephants_survey <- processed_ultimate_sheet %>%
-  select("Grid_ID", starts_with("Elephant_"))
-psi_covars_elephants <- processed_ultimate_sheet %>%
-  select(c(
+psi_covars_elephants <- c(
     "total_land_area_per_grid_sqkm",
     "NDVI",
     "Dist_to_PA_km",
-    "Human_disturbance_score",
-    "cattle"
-  ))
-p_covars_elephants <- processed_ultimate_sheet %>%
-  select(matches("Rain_score_|HD_Vehicles_|substrate_score_")) %>%
-  utils$combine_columns_by_prefix()
+    "Human_disturbance_score"
+  )
+p_covars_elephants_string <- "Rain_score_|HD_Vehicles_|substrate_score_"
 
-elephants_hines_occupancy <- lapply(
-  formulae$elephants_models,
-  function(formula) {
-    models$calculate_hines_occupancy(
-      site_and_detection_history = grids_and_elephants_survey,
-      model_formula = formula,
-      unitcov = psi_covars_elephants,
-      survcov = p_covars_elephants
-    )
-  }
-)
-
-hines_aic_elephants <- createAicTable(
-  elephants_hines_occupancy,
-  use.aicc = TRUE
-)
-write_csv(
-  x = hines_aic_elephants$table,
-  file = config$orig_elephants_aic_table
-)
-
-prediction_data_elephants <- utils$create_prediction_data(
-  datasheet = processed_ultimate_sheet,
-  columns = c("NDVI", "Human_disturbance_score")
-)
-
-occupancy_plot_elephants <- utils$create_predictive_plots(
-  sample_data = prediction_data_elephants,
-  model = elephants_hines_occupancy[[as.numeric(
-    rownames(hines_aic_elephants$table)[[1]]
-  )]],
-  plot_title = "Elephant Occupancy",
-  subplot_titles = c("NDVI", "Human disturbance"),
-  x_labels = c("NDVI", "Human disturbance index")
-)
-ggsave(
-  filename = config$orig_elephants_occupancy_plot,
-  plot = occupancy_plot_elephants
+elephants_hines_occupancy <- utils$run_models_return_output(
+  datasheet_path = config$merged_data_sheet,
+  animal_prefix = "Elephant_",
+  models_list = formulae$elephants_models,
+  psi_covars_list = psi_covars_elephants,
+  p_covars_match_string = p_covars_elephants_string,
+  aic_table_filepath = config$orig_elephants_aic_table,
+  preds_image_filepath = config$orig_elephants_occupancy_plot
 )
 
 #--------------------reproduce rhinos--------------------

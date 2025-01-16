@@ -50,6 +50,6 @@ calculate_hines_occupancy <- function(
     type = "so.cd",
     data = pao_obj,
     seed = 100,
-    randinit = 50
+    randinit = 200
   )
 }
