@@ -30,7 +30,7 @@ calculate_ss_occupancy <- function(
     type = "so",
     data = pao_obj,
     seed = 100,
-    randinit = 50
+    randinit = 200
   )
 }
 

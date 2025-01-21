@@ -212,9 +212,11 @@ run_models_return_output <- function(
   p_covars_match_string = NULL,
   aic_table_filepath = NULL,
   coeffs_table_filepath = NULL,
+  p_coeffs_table_filepath = NULL,
   preds_image_filepath = NULL
 ) {
   datasheet <- read_parquet(datasheet_path)
+  print("Datasheet successfully read")
 
   grids_and_occupancy <- datasheet %>%
     select("Grid_ID", starts_with(animal_prefix))
@@ -230,6 +232,7 @@ run_models_return_output <- function(
       select(matches(p_covars_match_string)) %>%
       combine_columns_by_prefix()
   }
+  print("psi and p covars tables initialized")
 
   if (!is.list(models_list) || !length(models_list)) {
     stop("Must provide formulae list to run models")
@@ -237,6 +240,7 @@ run_models_return_output <- function(
 
   cluster <- setup_parallel()
 
+  print("starting models")
   hines_models <- foreach(
     formula = models_list,
     .packages = c("RPresence", "dplyr"),
@@ -244,11 +248,12 @@ run_models_return_output <- function(
   ) %dopar% {
     models$calculate_hines_occupancy(
       site_and_detection_history = grids_and_occupancy,
-	 model_formula = formula,
-	 unitcov = psi_covars,
-	 survcov = p_covars
+      model_formula = formula,
+      unitcov = psi_covars,
+      survcov = p_covars
     )
   }
+  print("models done")
   cleanup_parallel(cluster)
 
   aic <- createAicTable(
@@ -265,6 +270,13 @@ run_models_return_output <- function(
     tibble::rownames_to_column(var = "model") %>%
     tibble()
 
+  coeffs_table_p <- hines_models_reordered %>%
+    map(.f = ~coef(.x, param = "p", prob = 0.05)) %>%
+    bind_rows() %>%
+    tibble::rownames_to_column(var = "model") %>%
+    tibble()
+
+  print("writing aic and coeffs tables if required")
   if (is.character(aic_table_filepath)) {
     write_csv(
       aic$table,
@@ -277,7 +289,14 @@ run_models_return_output <- function(
       coeffs_table_filepath
     )
   }
+  if (is.character(p_coeffs_table_filepath)) {
+    write_csv(
+      coeffs_table_p,
+      p_coeffs_table_filepath
+    )
+  }
 
+  print("creating plots for top model")
   pred_plots <- NULL
   if (is.character(preds_image_filepath)) {
     prediction_data <- create_prediction_data(

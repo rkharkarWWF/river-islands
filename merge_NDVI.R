@@ -23,10 +23,11 @@ merged <- left_join(
   by = join_by(Grid_ID)
 )
 
-merged <- merged %>%
+merged %>%
   mutate(
     NDVI_original = NDVI,
     NDVI = NDVI_mean
   ) %>%
+  select(-NDVI_mean) %>%
   utils$reorder_columns() %>%
   write_parquet(config$data_sheet_with_new_ndvi)

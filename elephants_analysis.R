@@ -101,7 +101,7 @@ more_expl_models <- utils$run_models_return_output(
 # Only vehicles and built-up were comparatively significant in
 # the previous analysis. Now I'll start introducing other covariates.
 # 'p' will still be 1.
-psi_covars_list <-c(
+psi_covars_list <- c(
   "mean_HD_Vehicles",
   "mean_HD_built_up",
   "NDVI",
@@ -171,13 +171,15 @@ psi_covars_list <- c(
   "total_land_area_per_grid_sqkm",
   "Human_disturbance_score"
 )
-p_covars_match_string <- "Rain_score_|substrate_score_"
+p_covars_match_string <- "Rain_score_|HD_Vehicles_|substrate_score_"
 
 models_final_final <- utils$run_models_return_output(
   datasheet_path = config$data_sheet_with_new_ndvi,
   animal_prefix = "Elephant_",
   psi_covars_list = psi_covars_list,
+  ## mutation_list = psi_covars_list,
   p_covars_match_string = p_covars_match_string,
   models_list = formulae$actual_final_models,
-  aic_table_filepath = config$elephants_final_final_aic_table
+  aic_table_filepath = config$elephants_final_final_aic_table,
+  preds_image_filepath = config$elephants_final_final_plot
 )

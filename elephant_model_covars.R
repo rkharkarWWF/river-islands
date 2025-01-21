@@ -212,6 +212,10 @@ more_exp_models <- list(
 #--------------------Plus other covars--------------------
 hum_impact_plus_others <- list(
   c(
+    psi ~ 1,
+    p ~ 1
+  ),
+  c(
     psi ~
       mean_HD_Vehicles +
       mean_HD_built_up +
@@ -395,9 +399,5 @@ actual_final_models <- list(
   c(
     psi ~ 1,
     p ~ 1
-  ),
-  c(
-    psi ~ Human_disturbance_score + NDVI,
-    p ~ Rain_score + substrate_score
   )
 )
