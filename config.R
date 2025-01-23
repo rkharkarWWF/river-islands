@@ -64,6 +64,7 @@ elephants_final_final_plot <-
   "./elephants/images/elephants_actual_final.png"
 
 #--------------------Rhino output files--------------------
+rhinos_ss_hines_comp <- "./rhinos/output/ss_v_hines.csv"
 rhinos_hum_act_aic_table <- "./rhinos/output/hum_act_aic.csv"
 rhinos_hum_act_coeffs <- "./rhinos/output/hum_act_coeffs.csv"
 
@@ -74,16 +75,19 @@ rhinos_hum_act_plus_others_coeffs <-
 rhinos_hum_act_plus_others_plot <-
   "./rhinos/images/hum_act_plus_others.png"
 
+rhinos_detection_aic <- "./rhinos/output/detection_aic.csv"
+rhinos_detection_coeffs <- "./rhinos/output/detection_coeffs.csv"
+
 rhinos_final_aic_table <- "./rhinos/output/final_aic.csv"
 rhinos_final_coeffs <- "./rhinos/output/final_coeffs.csv"
-rhinos_final_plot <- "./rhinos/images/final.png"
-
-rhinos_no_v_aic_table <-
-  "./rhinos/output/final_without_v_in_p_aic.csv"
-rhinos_no_v_coeffs <-
-  "./rhinos/output/final_without_v_in_p_coeffs.csv"
-rhinos_no_v_plot <-
-  "./rhinos/images/final_without_v_in_p.png"
+rhinos_final_coeffs_best_model <-
+  "./tigers/output/final_coeffs_best_model.csv"
+rhinos_final_p_coeffs_best_model <-
+  "./tigers/output/final_p_coeffs_best_model.csv"
+rhinos_final_plot <-
+  "./rhinos/images/final.png"
+rhinos_psi_values <-
+  "./rhinos/output/psi.csv"
 
 #--------------------Tigers output--------------------
 tigers_ss_hines_comp <- "./tigers/output/ss_v_hines.csv"
@@ -103,9 +107,16 @@ tigers_detection_aic <-
 tigers_detection_coeffs <-
   "./tigers/output/detection_coeffs.csv"
 
+# Tigers final
 tigers_final_aic <-
   "./tigers/output/final_aic.csv"
 tigers_final_coeffs <-
   "./tigers/output/final_coeffs.csv"
-tigers_final_p_coeffs <-
-  "/tigers/output/final_p_coeffs.csv"
+tigers_final_coeffs_best_model <-
+  "./tigers/output/final_coeffs_best_model.csv"
+tigers_final_p_coeffs_best_model <-
+  "./tigers/output/final_p_coeffs_best_model.csv"
+tigers_final_plot <-
+  "./tigers/images/final.png"
+tigers_psi_values <-
+  "./tigers/output/psi.csv"

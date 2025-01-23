@@ -1,3 +1,8 @@
+base_model <- c(
+  psi ~ 1,
+  p ~ 1
+)
+
 #--------------------Human activity--------------------
 hum_act_models <- list(
   c(
@@ -5,15 +10,7 @@ hum_act_models <- list(
     p ~ 1
   ),
   c(
-    psi ~ bool_hd_people,
-    p ~ 1
-  ),
-  c(
     psi ~ mean_HD_Livestocksightings,
-    p ~ 1
-  ),
-  c(
-    psi ~ bool_hd_livestocksightings,
     p ~ 1
   ),
   c(
@@ -21,15 +18,7 @@ hum_act_models <- list(
     p ~ 1
   ),
   c(
-    psi ~ bool_hd_lopping,
-    p ~ 1
-  ),
-  c(
     psi ~ mean_HD_Grass_bamboo_cut,
-    p ~ 1
-  ),
-  c(
-    psi ~ bool_hd_grass_bamboo_cut,
     p ~ 1
   ),
   c(
@@ -37,15 +26,7 @@ hum_act_models <- list(
     p ~ 1
   ),
   c(
-    psi ~ bool_hd_trash,
-    p ~ 1
-  ),
-  c(
     psi ~ mean_HD_Mining,
-    p ~ 1
-  ),
-  c(
-    psi ~ bool_hd_mining,
     p ~ 1
   ),
   c(
@@ -53,15 +34,7 @@ hum_act_models <- list(
     p ~ 1
   ),
   c(
-    psi ~ bool_hd_garbage_dump,
-    p ~ 1
-  ),
-  c(
     psi ~ mean_HD_Vehicles,
-    p ~ 1
-  ),
-  c(
-    psi ~ bool_hd_vehicles,
     p ~ 1
   ),
   c(
@@ -69,15 +42,7 @@ hum_act_models <- list(
     p ~ 1
   ),
   c(
-    psi ~ bool_hd_built_up,
-    p ~ 1
-  ),
-  c(
     psi ~ mean_HD_Feral_dogs,
-    p ~ 1
-  ),
-  c(
-    psi ~ bool_hd_feral_dogs,
     p ~ 1
   )
 )
@@ -90,8 +55,7 @@ hum_activity_plus_others <- list(
       mean_HD_People +
       NDVI +
       Dist_to_PA_km +
-      total_land_area_per_grid_sqkm
-   ,
+      total_land_area_per_grid_sqkm,
     p ~ 1
   ),
   c(
@@ -281,138 +245,38 @@ hum_activity_plus_others <- list(
   )
 )
 
-#--------------------Potentially final models--------------------
-final_models <- list(
+#--------------------Try detection covars--------------------
+detection_models <- list(
   c(
-    psi ~
-      mean_HD_People +
-      mean_HD_Vehicles +
-      total_land_area_per_grid_sqkm,
-    p ~ Rain_score + HD_Vehicles + substrate_score
-  ),
-  c(
-    psi ~
-      mean_HD_People +
-      mean_HD_Vehicles,
-    p ~ Rain_score + HD_Vehicles + substrate_score
-  ),
-  c(
-    psi ~
-      mean_HD_People +
-      mean_HD_Vehicles +
-      NDVI,
-    p ~ Rain_score + HD_Vehicles + substrate_score
-  ),
-  c(
-    psi ~
-      mean_HD_People +
-      mean_HD_Vehicles +
-      total_land_area_per_grid_sqkm +
-      Dist_to_PA_km,
-    p ~ Rain_score + HD_Vehicles + substrate_score
-  ),
-  c(
-    psi ~
-      mean_HD_People +
-      mean_HD_Vehicles +
-      total_land_area_per_grid_sqkm +
-      NDVI,
-    p ~ Rain_score + HD_Vehicles + substrate_score
-  ),
-  c(
-    psi ~
-      mean_HD_People +
-      mean_HD_Vehicles +
-      Dist_to_PA_km,
-    p ~ Rain_score + HD_Vehicles + substrate_score
-  ),
-  c(
-    psi ~
-      mean_HD_People +
-      mean_HD_Vehicles +
-      NDVI +
-      Dist_to_PA_km,
-    p ~ Rain_score + HD_Vehicles + substrate_score
-  ),
-  c(
-    psi ~
-      mean_HD_People +
-      mean_HD_Vehicles +
-      total_land_area_per_grid_sqkm +
-      NDVI +
-      Dist_to_PA_km,
-    p ~ Rain_score + HD_Vehicles + substrate_score
+    psi ~ 1,
+    p ~ Rain_score
   ),
   c(
     psi ~ 1,
-    p ~ Rain_score + HD_Vehicles + substrate_score
-  )
-)
-
-#--------------------Final models without vehicles in p--------------------
-final_models_without_v <- list(
-  c(
-    psi ~
-      mean_HD_People +
-      mean_HD_Vehicles +
-      total_land_area_per_grid_sqkm,
-    p ~ Rain_score + substrate_score
+    p ~ substrate_score
   ),
   c(
-    psi ~
-      mean_HD_People +
-      mean_HD_Vehicles,
-    p ~ Rain_score + substrate_score
-  ),
-  c(
-    psi ~
-      mean_HD_People +
-      mean_HD_Vehicles +
-      NDVI,
-    p ~ Rain_score + substrate_score
-  ),
-  c(
-    psi ~
-      mean_HD_People +
-      mean_HD_Vehicles +
-      total_land_area_per_grid_sqkm +
-      Dist_to_PA_km,
-    p ~ Rain_score + substrate_score
-  ),
-  c(
-    psi ~
-      mean_HD_People +
-      mean_HD_Vehicles +
-      total_land_area_per_grid_sqkm +
-      NDVI,
-    p ~ Rain_score + substrate_score
-  ),
-  c(
-    psi ~
-      mean_HD_People +
-      mean_HD_Vehicles +
-      Dist_to_PA_km,
-    p ~ Rain_score + substrate_score
-  ),
-  c(
-    psi ~
-      mean_HD_People +
-      mean_HD_Vehicles +
-      NDVI +
-      Dist_to_PA_km,
-    p ~ Rain_score + substrate_score
-  ),
-  c(
-    psi ~
-      mean_HD_People +
-      mean_HD_Vehicles +
-      total_land_area_per_grid_sqkm +
-      NDVI +
-      Dist_to_PA_km,
-    p ~ Rain_score + substrate_score
+    psi ~ 1,
+    p ~ HD_Vehicles
   ),
   c(
     psi ~ 1,
     p ~ Rain_score + substrate_score
+  ),
+  c(
+    psi ~ 1,
+    p ~ Rain_score + HD_Vehicles
+  ),
+  c(
+    psi ~ 1,
+    p ~ substrate_score + HD_Vehicles
+  ),
+  c(
+    psi ~ 1,
+    p ~ Rain_score + substrate_score + HD_Vehicles
+  ),
+  c(
+    psi ~ 1,
+    p ~ 1
   )
 )

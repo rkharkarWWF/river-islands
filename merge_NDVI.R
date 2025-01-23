@@ -28,6 +28,7 @@ merged %>%
     NDVI_original = NDVI,
     NDVI = NDVI_mean
   ) %>%
+  ungroup() %>%
   select(-NDVI_mean) %>%
   utils$reorder_columns() %>%
   write_parquet(config$data_sheet_with_new_ndvi)

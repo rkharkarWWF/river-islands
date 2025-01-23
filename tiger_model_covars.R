@@ -261,10 +261,6 @@ detection_models <- list(
   ),
   c(
     psi ~ 1,
-    p ~ Cattle
-  ),
-  c(
-    psi ~ 1,
     p ~ HD_Vehicles
   ),
   c(
@@ -273,15 +269,7 @@ detection_models <- list(
   ),
   c(
     psi ~ 1,
-    p ~ Rain_score + Cattle
-  ),
-  c(
-    psi ~ 1,
     p ~ Rain_score + HD_Vehicles
-  ),
-  c(
-    psi ~ 1,
-    p ~ substrate_score + Cattle
   ),
   c(
     psi ~ 1,
@@ -289,27 +277,7 @@ detection_models <- list(
   ),
   c(
     psi ~ 1,
-    p ~ Cattle + HD_Vehicles
-  ),
-  c(
-    psi ~ 1,
-    p ~ Rain_score + substrate_score + Cattle
-  ),
-  c(
-    psi ~ 1,
     p ~ Rain_score + substrate_score + HD_Vehicles
-  ),
-  c(
-    psi ~ 1,
-    p ~ Rain_score + Cattle + HD_Vehicles
-  ),
-  c(
-    psi ~ 1,
-    p ~ substrate_score + Cattle + HD_Vehicles
-  ),
-  c(
-    psi ~ 1,
-    p ~ Rain_score + substrate_score + Cattle + HD_Vehicles
   ),
   c(
     psi ~ 1,

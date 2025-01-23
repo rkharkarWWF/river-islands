@@ -13,6 +13,9 @@ sys.source("./tiger_model_covars.R", envir = formulae)
 
 library(arrow)
 library(RPresence)
+library(ggplot2)
+library(stringr)
+library(readr)
 
 #--------------------Models comparison--------------------
 # Comparing single season and hines models
@@ -114,7 +117,7 @@ psi_covars_list <- c(
 )
 p_covars_match_string <- "HD_Vehicles_"
 
-p_models <- utils$run_models_return_output(
+final_models <- utils$run_models_return_output(
   datasheet_path = config$data_sheet_with_new_ndvi,
   animal_prefix = "Tiger_",
   psi_covars_list = psi_covars_list,
@@ -125,3 +128,62 @@ p_models <- utils$run_models_return_output(
   coeffs_table_filepath = config$tigers_final_coeffs,
   p_coeffs_table_filepath = config$tigers_final_p_coeffs
 )
+
+best_model <- final_models$models[[1]]
+best_model_psi_coeffs <- coef(
+  best_model,
+  param = "psi",
+  prob = 0.05
+)
+best_model_p_coeffs <- coef(
+  best_model,
+  param = "p",
+  prob = 0.05
+)
+write_csv(
+  best_model_psi_coeffs,
+  config$tigers_final_coeffs_best_model
+)
+write_csv(
+  best_model_p_coeffs,
+  config$tigers_final_p_coeffs_best_model
+)
+
+prediction_data <- utils$create_prediction_data(
+  best_model$data$unitcov,
+  colnames(best_model$data$unitcov),
+  datapoints = 200
+)
+best_model_prediction_plot <- utils$create_predictive_plots(
+  prediction_data,
+  best_model,
+  "Occupancy Covariates",
+  c("Signs of Prey", "Signs of People", "Total Land Area"),
+  c("Prey", "People", "Land Area"),
+  columns_to_unscale_by = final_models$psi_covars
+)
+ggsave(config$tigers_final_plot, best_model_prediction_plot)
+
+ctr <- 0
+wgt <- 0
+model_list <- list()
+wgt_list <- list()
+psi_values <- tibble(grid_id = final_models$models[[1]]$data$unitnames)
+while (wgt < 0.8) {
+  ctr <- ctr + 1
+  wgt <- wgt + final_models$aic$table$wgt[[ctr]]
+  wgt_list[ctr] <- final_models$aic$table$wgt[[ctr]]
+  model_list[ctr] <- final_models$models[[ctr]]$modname
+  psi_values[[final_models$models[[ctr]]$modname]] <- final_models$models[[ctr]]$real$psi$est
+}
+
+psi_values <- psi_values %>%
+  mutate(mean_psi = rowSums(mapply(
+    "*",
+    across(-c("grid_id")),
+    wgt_list
+  )) / sum(unlist(wgt_list)))
+
+psi_values %>%
+  select(grid_id, mean_psi) %>%
+  write_csv(config$tigers_psi_values)

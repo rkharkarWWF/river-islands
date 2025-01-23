@@ -133,12 +133,28 @@ create_prediction_data <- function(
     unnest(everything())
 }
 
+unscale <- function(
+  col_to_unscale,
+  dataframe_to_unscale_by,
+  col_to_unscale_by
+  ) {
+  scaled_scale <- attr(
+    dataframe_to_unscale_by[[col_to_unscale_by]],
+    "scaled:scale")
+  scaled_center <- attr(
+    dataframe_to_unscale_by[[col_to_unscale_by]],
+    "scaled:center"
+  )
+  col_to_unscale * scaled_scale + scaled_center
+}
+
 create_predictive_plots <- function(
   sample_data,
   model,
   plot_title,
   subplot_titles,
-  x_labels
+  x_labels,
+  columns_to_unscale_by = NULL
 ) {
   if ((ncol(sample_data) != length(x_labels)) ||
       length(subplot_titles) != length(x_labels)
@@ -150,15 +166,27 @@ Stopping predictions."
     return()
   }
 
-  sample_data_renamed <- setNames(
-    object = sample_data,
-    nm = x_labels
-  )
   predictions <- predict(
     object = model,
     newdata = sample_data,
     param = "psi"
   )
+
+  sample_data_rescaled <- sample_data
+  sample_data_rescaled[sample_data_rescaled == 0] <- NA
+  if (is.data.frame(columns_to_unscale_by)) {
+    cols_to_unscale <- colnames(sample_data)
+    sample_data_rescaled <- sample_data_rescaled %>%
+      mutate(across(
+        all_of(cols_to_unscale),
+        ~ unscale(.x, columns_to_unscale_by, cur_column())
+      ))
+  }
+  sample_data_renamed <- setNames(
+    object = sample_data_rescaled,
+    nm = x_labels
+  )
+
   plot_data <- tibble(sample_data_renamed, predictions)
   plot_data_long <- plot_data %>%
     tidyr::pivot_longer(
@@ -166,7 +194,6 @@ Stopping predictions."
       names_to = "Labels",
       values_to = "Values"
     )
-  plot_data_long$Values[plot_data_long$Values == 0] <- NA
 
   ggplot(
     data = plot_data_long,
@@ -180,7 +207,8 @@ Stopping predictions."
     ) +
     labs(
       title = plot_title,
-      y = "Occupancy probability"
+      y = "Occupancy probability",
+      x = "Mean Values"
     ) +
     facet_wrap(
       ~ Labels,
@@ -321,6 +349,8 @@ run_models_return_output <- function(
 
   return(list(
     "datasheet" = datasheet,
+    "psi_covars" = psi_covars,
+    "p_covars" = p_covars,
     "aic" = aic,
     "models" = hines_models_reordered,
     "plot" = pred_plots
