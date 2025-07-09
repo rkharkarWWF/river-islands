@@ -68,7 +68,7 @@ hum_act_models <- utils$run_models_return_output(
 )
 
 #--------------------Add in covars--------------------
-# Add in covariates. For human activity, HD_People and HD_Livestocksightings
+# Add in covariates. For human activity, HD_People and wildprey
 # were most important, with a 20+ delta AIC between the two
 
 psi_covars_list <- c(
@@ -92,12 +92,20 @@ hum_act_plus_others_models <- utils$run_models_return_output(
 
 #--------------------Detection covars--------------------
 # Covariates affecting detection.
+psi_covars_list <- c(
+  "mean_HD_People",
+  "wildprey",
+  "NDVI",
+  "Dist_to_PA_km",
+  "total_land_area_per_grid_sqkm"
+)
 p_covars_match_string <-
   "Rain_score_|substrate_score_|Cattle_|HD_Vehicles_"
 
 p_models <- utils$run_models_return_output(
   datasheet_path = config$data_sheet_with_new_ndvi,
   animal_prefix = "Tiger_",
+  psi_covars_list = psi_covars_list,
   p_covars_match_string = p_covars_match_string,
   models_list = formulae$detection_models,
   aic_table_filepath = config$tigers_detection_aic,
@@ -115,7 +123,7 @@ psi_covars_list <- c(
   "Dist_to_PA_km",
   "total_land_area_per_grid_sqkm"
 )
-p_covars_match_string <- "HD_Vehicles_"
+p_covars_match_string <- "Rain_score|substrate_score_|HD_Vehicles_"
 
 final_models <- utils$run_models_return_output(
   datasheet_path = config$data_sheet_with_new_ndvi,
@@ -134,12 +142,14 @@ best_model_psi_coeffs <- coef(
   best_model,
   param = "psi",
   prob = 0.05
-)
+) %>%
+  tibble::rownames_to_column(var = "coefficient")
 best_model_p_coeffs <- coef(
   best_model,
   param = "p",
   prob = 0.05
-)
+) %>%
+  tibble::rownames_to_column(var = "coefficient")
 write_csv(
   best_model_psi_coeffs,
   config$tigers_final_coeffs_best_model
@@ -182,8 +192,17 @@ psi_values <- psi_values %>%
     "*",
     across(-c("grid_id")),
     wgt_list
-  )) / sum(unlist(wgt_list)))
+    )) / sum(unlist(wgt_list)))
+naive_presence <- final_models$datasheet %>%
+  select(Grid_ID, starts_with("Tiger_")) %>%
+  mutate(presence = if_else(
+    rowSums(across(-c("Grid_ID")), na.rm = TRUE) > 1,
+    1,
+    0
+  )) %>%
+  select(Grid_ID, presence)
+psi_and_presence <- psi_values %>%
+  select(Grid_ID = grid_id, mean_psi) %>%
+  left_join(naive_presence, by = "Grid_ID")
 
-psi_values %>%
-  select(grid_id, mean_psi) %>%
-  write_csv(config$tigers_psi_values)
+write_csv(psi_and_presence, config$tigers_psi_values)

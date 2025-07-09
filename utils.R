@@ -13,6 +13,7 @@ library(doParallel)
 library(arrow)
 library(readr)
 library(foreach)
+library(seriation)
 
 convert_counts_to_boolean <- function(tibble, col_indexes) {
   tibble %>%
@@ -60,38 +61,57 @@ preprocess_ultimate_sheet <- function(ultimate_sheet_path) {
 }
 
 save_correlations <- function(master_sheet, filenames) {
-  correlation_set1 <- master_sheet %>% select(c(
-    "mean_livestock_wildprey",
-    "Dist_to_PA_km",
-    "livestock",
-    "Human_disturbance_score",
-    "total_land_area_per_grid_sqkm",
-    "NDVI",
-    "wildprey"
-  ))
-
-  plot <- correlation_set1 %>%
-    corrr::correlate(method = "pearson", use = "pairwise.complete.obs") %>%
-    corrr::rearrange(method = "MDS") %>%
-    corrr::shave() %>%
-    corrr::rplot(print_cor = TRUE) +
-    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 60, hjust = 1))
-
-  ggplot2::ggsave(filename = filenames[[1]], plot = plot)
-
   correlation_set2 <- master_sheet %>% select(c(
+    "mean_HD_Garbage_dump",
     "mean_HD_Vehicles",
-    "mean_HD_Livestocksightings",
     "mean_HD_People",
-    "mean_HD_Trash"
-  ))
+    "mean_HD_built_up",
+    "Dist_to_PA_km",
+    "NDVI",
+    "total_land_area_per_grid_sqkm",
+    "livestock",
+    "Rangeland",
+    "mean_nightlight_score",
+    "wildprey",
+    "livestock"
+    ## "Human_Population"
+    ))
 
-  plot2 <- correlation_set2 %>%
-    corrr::correlate(method = "pearson", use = "pairwise.complete.obs") %>%
-    corrr::rearrange(method = "MDS") %>%
-    corrr::shave() %>%
-    corrr::rplot(print_cor = TRUE) +
-    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 60, hjust = 1))
+  cor_data <- correlation_set2 %>%
+    correlate(method = "pearson", use = "pairwise.complete.obs") %>%
+    rearrange(method = "MDS") %>%
+    shave()
+
+  var_order <- cor_data$term
+
+  plot_data <- cor_data %>%
+    stretch() %>%
+    filter(!is.na(r)) %>%
+    mutate(
+      x = factor(x, levels = var_order),
+      y = factor(y, levels = rev(var_order))
+    )
+  print(plot_data)
+  plot2 <- ggplot(plot_data, aes(x = x, y = y, fill = r)) +
+    geom_point(aes(size = abs(r)), shape = 21, color = "transparent", stroke = 0.1) +
+    geom_text(aes(label = round(r, 2)), color = "black", size = 3) +
+    scale_fill_gradient2(low = "red", mid = "white", high = "lightblue", midpoint = 0) +
+    scale_size(range = c(2, 10)) +
+    guides(size = "none") +
+    scale_x_discrete(labels = function(x) gsub("mean_HD_", "", x)) +
+    scale_y_discrete(labels = function(x) gsub("mean_HD_", "", x)) +
+    coord_fixed() +
+    theme(
+      panel.background = element_rect(fill = "white", color = NA),
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      axis.text.x = element_text(angle = 60, hjust = 1),
+      axis.text = element_text(color = "black"),
+      axis.title = element_blank(),
+      legend.position = "right"
+    ) +
+    labs(fill = "Correlation")
 
   ggplot2::ggsave(filename = filenames[[2]], plot = plot2)
 }
@@ -244,6 +264,13 @@ run_models_return_output <- function(
   preds_image_filepath = NULL
 ) {
   datasheet <- read_parquet(datasheet_path)
+  datasheet <- datasheet %>%
+    mutate(
+      across(
+        starts_with("substrate_score"),
+        as.factor
+      )
+    )
   print("Datasheet successfully read")
 
   grids_and_occupancy <- datasheet %>%

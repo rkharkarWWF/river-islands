@@ -294,7 +294,7 @@ final_models <- list(
       NDVI +
       Dist_to_PA_km +
       total_land_area_per_grid_sqkm,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
@@ -302,7 +302,7 @@ final_models <- list(
       mean_HD_People +
       NDVI +
       Dist_to_PA_km,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
@@ -310,7 +310,7 @@ final_models <- list(
       mean_HD_People +
       NDVI +
       total_land_area_per_grid_sqkm,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
@@ -318,74 +318,74 @@ final_models <- list(
       mean_HD_People +
       Dist_to_PA_km +
       total_land_area_per_grid_sqkm,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       wildprey +
       mean_HD_People +
       NDVI,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       wildprey +
       mean_HD_People +
       Dist_to_PA_km,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       wildprey +
       mean_HD_People +
       total_land_area_per_grid_sqkm,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       wildprey +
       mean_HD_People,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       NDVI +
       Dist_to_PA_km +
       total_land_area_per_grid_sqkm,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       NDVI +
       Dist_to_PA_km,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       NDVI +
       total_land_area_per_grid_sqkm,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       Dist_to_PA_km +
       total_land_area_per_grid_sqkm,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       NDVI,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       Dist_to_PA_km,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       total_land_area_per_grid_sqkm,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
@@ -393,7 +393,7 @@ final_models <- list(
       NDVI +
       Dist_to_PA_km +
       total_land_area_per_grid_sqkm,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
@@ -401,89 +401,89 @@ final_models <- list(
       NDVI +
       Dist_to_PA_km +
       total_land_area_per_grid_sqkm,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       wildprey +
       NDVI,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       wildprey +
       Dist_to_PA_km,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       wildprey +
       total_land_area_per_grid_sqkm,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       wildprey +
       NDVI +
       Dist_to_PA_km,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       wildprey +
       NDVI +
       total_land_area_per_grid_sqkm,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       wildprey +
       total_land_area_per_grid_sqkm +
       Dist_to_PA_km,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       mean_HD_People +
       NDVI,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       mean_HD_People +
       Dist_to_PA_km,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       mean_HD_People +
       total_land_area_per_grid_sqkm,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       mean_HD_People +
       NDVI +
       Dist_to_PA_km,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       mean_HD_People +
       NDVI +
       total_land_area_per_grid_sqkm,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~
       mean_HD_People +
       total_land_area_per_grid_sqkm +
       Dist_to_PA_km,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~ 1,
-    p ~ HD_Vehicles
+    p ~ Rain_score + substrate_score + HD_Vehicles
   ),
   c(
     psi ~ 1,

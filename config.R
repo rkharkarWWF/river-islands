@@ -80,10 +80,11 @@ rhinos_detection_coeffs <- "./rhinos/output/detection_coeffs.csv"
 
 rhinos_final_aic_table <- "./rhinos/output/final_aic.csv"
 rhinos_final_coeffs <- "./rhinos/output/final_coeffs.csv"
+rhinos_final_p_coeffs <- "./rhinos/output/final_p_coeffs.csv"
 rhinos_final_coeffs_best_model <-
-  "./tigers/output/final_coeffs_best_model.csv"
+  "./rhinos/output/final_coeffs_best_model.csv"
 rhinos_final_p_coeffs_best_model <-
-  "./tigers/output/final_p_coeffs_best_model.csv"
+  "./rhinos/output/final_p_coeffs_best_model.csv"
 rhinos_final_plot <-
   "./rhinos/images/final.png"
 rhinos_psi_values <-
@@ -120,3 +121,45 @@ tigers_final_plot <-
   "./tigers/images/final.png"
 tigers_psi_values <-
   "./tigers/output/psi.csv"
+
+#--------------------Files for redoing elephants--------------------
+elephants_ss_hines_comp <- "./elephants/output/ss_v_hines.csv"
+
+elephants_hum_act_aic <- "./elephants/output/human_activity_aic.csv"
+elephants_hum_act_coeffs <- "./elephants/output/human_activity_coeffs.csv"
+
+elephants_hum_act_plus_others_aic <-
+  "./elephants/output/human_activity_plus_others_aic.csv"
+elephants_hum_act_plus_others_coeffs <-
+  "./elephants/output/human_activity_plus_others_coeffs.csv"
+elephants_hum_act_plus_others_plot <-
+  "./elephants/images/human_activity_plus_others.png"
+
+elephants_detection_aic <-
+  "./elephants/output/detection_aic.csv"
+elephants_detection_coeffs <-
+  "./elephants/output/detection_coeffs.csv"
+
+#Elephants pre-final
+elephants_pre_final_aic <-
+  "./elephants/output/pre_final_aic.csv"
+elephants_pre_final_coeffs <-
+  "./elephants/output/pre_final_coeffs.csv"
+elephants_pre_final_p_coeffs <-
+  "./elephants/output/pre_final_p_coeffs.csv"
+
+# Elephants final
+elephants_final_aic <-
+  "./elephants/output/final_aic.csv"
+elephants_final_coeffs <-
+  "./elephants/output/final_coeffs.csv"
+elephants_final_p_coeffs <-
+  "./elephants/output/final_p_coeffs.csv"
+elephants_final_coeffs_best_model <-
+  "./elephants/output/final_coeffs_best_model.csv"
+elephants_final_p_coeffs_best_model <-
+  "./elephants/output/final_p_coeffs_best_model.csv"
+elephants_final_plot <-
+  "./elephants/images/final.png"
+elephants_psi_values <-
+  "./elephants/output/psi.csv"

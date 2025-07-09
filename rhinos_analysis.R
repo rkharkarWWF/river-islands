@@ -125,10 +125,10 @@ final_models <- utils$run_models_return_output(
   animal_prefix = "One_horned_rhino_",
   psi_covars_list = psi_covars_list,
   mutation_list = psi_covars_list,
-  p_covars_match_string = p_covars_match_string,
   models_list = formulae$hum_activity_plus_others,
   aic_table_filepath = config$rhinos_final_aic_table,
-  coeffs_table_filepath = config$rhinos_final_coeffs
+  coeffs_table_filepath = config$rhinos_final_coeffs,
+  p_coeffs_table_filepath = config$rhinos_final_p_coeffs
 )
 
 best_model <- final_models$models[[1]]
@@ -136,12 +136,14 @@ best_model_psi_coeffs <- coef(
   best_model,
   param = "psi",
   prob = 0.05
-)
+) %>%
+  tibble::rownames_to_column(var = "coefficient")
 best_model_p_coeffs <- coef(
   best_model,
   param = "p",
   prob = 0.05
-)
+) %>%
+  tibble::rownames_to_column(var = "coefficient")
 write_csv(
   best_model_psi_coeffs,
   config$rhinos_final_coeffs_best_model
@@ -185,7 +187,16 @@ psi_values <- psi_values %>%
     across(-c("grid_id")),
     wgt_list
   )) / sum(unlist(wgt_list)))
+naive_presence <- final_models$datasheet %>%
+  select(Grid_ID, starts_with("One_horned_rhino_")) %>%
+  mutate(presence = if_else(
+    rowSums(across(-c("Grid_ID")), na.rm = TRUE) > 1,
+    1,
+    0
+  )) %>%
+  select(Grid_ID, presence)
+psi_and_presence <- psi_values %>%
+  select(Grid_ID = grid_id, mean_psi) %>%
+  left_join(naive_presence, by = "Grid_ID")
 
-psi_values %>%
-  select(grid_id, mean_psi) %>%
-  write_csv(config$rhinos_psi_values)
+write_csv(psi_and_presence, config$rhinos_psi_values)
